@@ -1,0 +1,44 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+
+  <style>
+  body { padding:10px; margin:0px; background-color: #ccc; }
+  #main { margin: 10px auto 0px auto; }
+  </style>
+  
+  <script src="javaScript/mobile_Draw.js"></script>
+  <script>
+function get_Data(){
+	var canvas = document.getElementById('main');
+        var ctx = canvas.getContext("2d");
+
+        let val = ctx.getImageData(0,0,28,28);
+        let str = "";
+        for(let i = 0 ; i < val.data.length; i += 4){
+		if(val.data[i] == 0){
+		val.data[i] = 255;
+	}else if(val.data[i] == 255){
+		val.data[i] = 0;
+}
+                str += val.data[i] + " ";
+}
+        document.getElementById("textbox").innerHTML = str;
+}
+   
+</script>
+</head> 
+<body>
+<button hidden id="clear">clear</button><br>
+<canvas id="main" width="28" height="28"></canvas>
+        <form action = "predict_Digit_Mobile.php" method = "POST">
+
+                <textarea hidden name = "details" id = "textbox" rows = "10" cols = "30"></textarea><br><br>
+		What number did you draw: <input type = "text" name = "actual">
+ 
+        <input type = "submit" value = "Submit" name = "submit" onclick="get_Data()">
+        </form>
+      
+</body>
+</html>
